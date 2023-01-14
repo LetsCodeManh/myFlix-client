@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import BookCard from "../BookCard/BookCard";
 import BookView from "../BookView/BookView";
 import LoginView from "../LoginView/LoginView";
+import SignupView from "../SignupView/SignupView";
 
 const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -44,12 +45,16 @@ const MainView = () => {
 
   if (!user) {
     return (
-      <LoginView
-        onLoggedIn={(user, token) => {
-          setUser(user);
-          setToken(token);
-        }}
-      />
+      <>
+        <LoginView
+          onLoggedIn={(user, token) => {
+            setUser(user);
+            setToken(token);
+          }}
+        />
+        or
+        <SignupView />
+      </>
     );
   }
 

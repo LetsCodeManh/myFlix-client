@@ -1,7 +1,9 @@
+import MainView from "./components/MainView/Mainview";
+
 const App = () => {
   return (
     <div className="my-flix">
-      <div>Good morning</div>
+      <MainView />
     </div>
   );
 };

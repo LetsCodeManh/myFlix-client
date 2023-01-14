@@ -27337,9 +27337,12 @@ var _loginViewDefault = parcelHelpers.interopDefault(_loginView);
 var _s = $RefreshSig$();
 const MainView = ()=>{
     _s();
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedToken = localStorage.getItem("token");
     const [books, setBooks] = (0, _react.useState)([]);
     const [selectedBook, setSelectedBook] = (0, _react.useState)(null);
     const [user, setUser] = (0, _react.useState)(null);
+    const [token, setToken] = (0, _react.useState)(null);
     (0, _react.useEffect)(()=>{
         fetch("https://openlibrary.org/search.json?q=star+wars").then((response)=>response.json()).then((data)=>{
             const booksFromApi = data.docs.map((doc)=>{
@@ -27353,46 +27356,75 @@ const MainView = ()=>{
             setBooks(booksFromApi);
         });
     });
+    (0, _react.useEffect)(()=>{
+        if (!token) return;
+        fetch("https://sleepy-brook-50846.herokuapp.com/login", {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>response.json()).then((data)=>{
+            console.log(data);
+        });
+    }, [
+        token
+    ]);
     if (!user) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _loginViewDefault.default), {
-        onLoggedIn: (user)=>setUser(user)
+        onLoggedIn: (user, token)=>{
+            setUser(user);
+            setToken(token);
+        }
     }, void 0, false, {
         fileName: "src/components/MainView/MainView.jsx",
-        lineNumber: 29,
-        columnNumber: 12
+        lineNumber: 47,
+        columnNumber: 7
     }, undefined);
     if (selectedBook) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _bookViewDefault.default), {
         book: selectedBook,
         onBackClick: ()=>setSelectedBook(null)
     }, void 0, false, {
         fileName: "src/components/MainView/MainView.jsx",
-        lineNumber: 34,
+        lineNumber: 58,
         columnNumber: 7
     }, undefined);
     if (books.length === 0) return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
         children: "The list is empty!"
     }, void 0, false, {
         fileName: "src/components/MainView/MainView.jsx",
-        lineNumber: 39,
+        lineNumber: 63,
         columnNumber: 12
     }, undefined);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-        children: books.map((book)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _bookCardDefault.default), {
-                book: book,
-                onBookClick: (newSelectedBook)=>{
-                    setSelectedBook(newSelectedBook);
-                }
-            }, book.id, false, {
+        children: [
+            books.map((book)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _bookCardDefault.default), {
+                    book: book,
+                    onBookClick: (newSelectedBook)=>{
+                        setSelectedBook(newSelectedBook);
+                    }
+                }, book.id, false, {
+                    fileName: "src/components/MainView/MainView.jsx",
+                    lineNumber: 69,
+                    columnNumber: 9
+                }, undefined)),
+            /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
+                onClick: ()=>{
+                    setUser(null);
+                    setToken(null);
+                    localStorage.clear();
+                },
+                children: "Logout"
+            }, void 0, false, {
                 fileName: "src/components/MainView/MainView.jsx",
-                lineNumber: 45,
-                columnNumber: 9
-            }, undefined))
-    }, void 0, false, {
+                lineNumber: 77,
+                columnNumber: 7
+            }, undefined)
+        ]
+    }, void 0, true, {
         fileName: "src/components/MainView/MainView.jsx",
-        lineNumber: 43,
+        lineNumber: 67,
         columnNumber: 5
     }, undefined);
 };
-_s(MainView, "z8Hr9RFdM2NPhcMOBs/FokIs+b8=");
+_s(MainView, "qptwfwfiGeOtIfIdnxCb911KDLU=");
 _c = MainView;
 exports.default = MainView;
 var _c;
@@ -28294,22 +28326,33 @@ parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
 var _react = require("react");
 var _s = $RefreshSig$();
-const LoginView = ()=>{
+// Username: 167OLdP5BUfLZGxP
+// Password: K39eKYhPMV9DDWhJ
+const LoginView = ({ onLoggedIn  })=>{
     _s();
     const [username, setUsername] = (0, _react.useState)("");
     const [password, setPassword] = (0, _react.useState)("");
     const handleSubmit = (e)=>{
-        event.preventDefault();
+        e.preventDefault();
         const data = {
             access: username,
             secret: password
         };
-        fetch("https://openlibrary.org/account/login.json", {
+        fetch("https://sleepy-brook-50846.herokuapp.com/login", {
             method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify(data)
-        }).then((response)=>{
-            if (response.ok) onLoggedIn(username);
-            else alert("Login failed");
+        }).then((response)=>response.json()).then((data)=>{
+            console.log("Login response: ", data);
+            if (data.user) {
+                localStorage.setItem("user", JSON.stringify(data.user));
+                localStorage.setItem("token", data.token);
+                onLoggedIn(data.user, data.token);
+            } else alert("No such user");
+        }).catch((e)=>{
+            alert("Something went wrong");
         });
     };
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("form", {
@@ -28322,16 +28365,17 @@ const LoginView = ()=>{
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                         type: "text",
                         value: username,
-                        onChange: (e)=>setUsername(e.target.value)
+                        onChange: (e)=>setUsername(e.target.value),
+                        required: true
                     }, void 0, false, {
                         fileName: "src/components/LoginView/LoginView.jsx",
-                        lineNumber: 31,
+                        lineNumber: 43,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/LoginView/LoginView.jsx",
-                lineNumber: 29,
+                lineNumber: 41,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("label", {
@@ -28341,16 +28385,17 @@ const LoginView = ()=>{
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
                         type: "password",
                         value: password,
-                        onChange: (e)=>setPassword(e.target.value)
+                        onChange: (e)=>setPassword(e.target.value),
+                        required: true
                     }, void 0, false, {
                         fileName: "src/components/LoginView/LoginView.jsx",
-                        lineNumber: 39,
+                        lineNumber: 52,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/LoginView/LoginView.jsx",
-                lineNumber: 37,
+                lineNumber: 50,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("button", {
@@ -28358,13 +28403,13 @@ const LoginView = ()=>{
                 children: "Submit"
             }, void 0, false, {
                 fileName: "src/components/LoginView/LoginView.jsx",
-                lineNumber: 45,
+                lineNumber: 59,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true, {
         fileName: "src/components/LoginView/LoginView.jsx",
-        lineNumber: 28,
+        lineNumber: 40,
         columnNumber: 5
     }, undefined);
 };

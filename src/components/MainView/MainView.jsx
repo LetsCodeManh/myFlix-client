@@ -4,9 +4,12 @@ import BookView from "../BookView/BookView";
 import LoginView from "../LoginView/LoginView";
 
 const MainView = () => {
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedToken = localStorage.getItem("token");
   const [books, setBooks] = useState([]);
   const [selectedBook, setSelectedBook] = useState(null);
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
     fetch("https://openlibrary.org/search.json?q=star+wars")
@@ -25,8 +28,29 @@ const MainView = () => {
       });
   });
 
+  useEffect(() => {
+    if (!token) {
+      return;
+    }
+
+    fetch("https://sleepy-brook-50846.herokuapp.com/login", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+      });
+  }, [token]);
+
   if (!user) {
-    return <LoginView onLoggedIn={(user) => setUser(user)} />;
+    return (
+      <LoginView
+        onLoggedIn={(user, token) => {
+          setUser(user);
+          setToken(token);
+        }}
+      />
+    );
   }
 
   if (selectedBook) {
@@ -50,6 +74,15 @@ const MainView = () => {
           }}
         />
       ))}
+      <button
+        onClick={() => {
+          setUser(null);
+          setToken(null);
+          localStorage.clear();
+        }}
+      >
+        Logout
+      </button>
     </div>
   );
 };

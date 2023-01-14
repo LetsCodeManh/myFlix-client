@@ -1,5 +1,6 @@
 import { useState } from "react";
 import BookCard from "../BookCard/BookCard";
+import BookView from "../BookView/BookView";
 
 const MainView = () => {
   const [books, setBooks] = useState([
@@ -44,10 +45,24 @@ const MainView = () => {
     return <div>The list is empty!</div>;
   }
 
+  const [selectedBook, setSelectedBook] = useState(null);
+
+  if (selectedBook) {
+    return (
+      <BookView book={selectedBook} onBackClick={() => setSelectedBook(null)} />
+    );
+  }
+
   return (
     <div>
       {books.map((book) => (
-        <BookCard book={book} />
+        <BookCard
+          key={book.id}
+          book={book}
+          onBookClick={(newSelectedBook) => {
+            setSelectedBook(newSelectedBook);
+          }}
+        />
       ))}
     </div>
   );

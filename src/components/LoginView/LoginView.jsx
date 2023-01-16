@@ -15,7 +15,7 @@ const LoginView = ({ onLoggedIn }) => {
       secret: password,
     };
 
-    fetch("https://sleepy-brook-50846.herokuapp.com/login", {
+    fetch("https://young-journey-11100.herokuapp.com/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

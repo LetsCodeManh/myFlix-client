@@ -13,20 +13,9 @@ const MainView = () => {
   const [token, setToken] = useState(null);
 
   useEffect(() => {
-    fetch("https://openlibrary.org/search.json?q=star+wars")
+    fetch("https://young-journey-11100.herokuapp.com/movies")
       .then((response) => response.json())
-      .then((data) => {
-        const booksFromApi = data.docs.map((doc) => {
-          return {
-            id: doc.key,
-            title: doc.title,
-            images: `https://covers.openlibrary.org/b/id/${doc.cover_i}-L.jpg`,
-            author: doc.author_name?.[0],
-          };
-        });
-
-        setBooks(booksFromApi);
-      });
+      .then((data) => {});
   });
 
   useEffect(() => {
@@ -34,7 +23,7 @@ const MainView = () => {
       return;
     }
 
-    fetch("https://sleepy-brook-50846.herokuapp.com/login", {
+    fetch("https://young-journey-11100.herokuapp.com/login", {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((response) => response.json())

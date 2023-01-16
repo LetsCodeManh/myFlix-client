@@ -4,21 +4,17 @@ import { useState } from "react";
 // Password: K39eKYhPMV9DDWhJ
 
 const LoginView = ({ onLoggedIn }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    name: "",
+    password: "",
+  });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const data = {
-      access: username,
-      secret: password,
-    };
-
+  const handleSubmit = (event) => {
+    event.preventDefault();
     fetch("https://young-journey-11100.herokuapp.com/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify(formData),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -32,27 +28,35 @@ const LoginView = ({ onLoggedIn }) => {
         }
       })
       .catch((e) => {
+        console.error(e)
         alert("Something went wrong");
       });
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        Username:{" "}
+        Username:
         <input
           type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          name="username"
+          onChange={handleChange}
+          value={formData.username}
           required
         />
       </label>
       <label>
-        Password:{" "}
+        Password:
         <input
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          name="password"
+          onChange={handleChange}
+          value={formData.password}
           required
         />
       </label>

@@ -1,33 +1,35 @@
 import { useState } from "react";
 
 const SignupView = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [birthday, setBirthday] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+    email: "",
+    birthday: "",
+  });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-    const data = {
-      Username: username,
-      Password: password,
-      Email: email,
-      Birthday: birthday,
-    };
+    try {
+      const response = await fetch(
+        "https://young-journey-11100.herokuapp.com/users",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    fetch("https://young-journey-11100.herokuapp.com/users", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    }).then((response) => {
-      if (response.ok) {
-        alert("Signup successful");
-        window.location.reload();
-      } else {
-        alert("Signup failed");
-      }
-    });
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   return (
@@ -36,9 +38,10 @@ const SignupView = () => {
         Username:
         <input
           type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          minLength="3"
+          name="username"
+          onChange={handleChange}
+          value={formData.username}
+          minLength="5"
           required
         />
       </label>
@@ -46,9 +49,10 @@ const SignupView = () => {
         Password:
         <input
           type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          minLength="6"
+          name="password"
+          onChange={handleChange}
+          value={formData.password}
+          minLength="5"
           required
         />
       </label>
@@ -56,8 +60,9 @@ const SignupView = () => {
         Email:
         <input
           type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          name="email"
+          onChange={handleChange}
+          value={formData.email}
           required
         />
       </label>
@@ -65,13 +70,14 @@ const SignupView = () => {
         Birthday:
         <input
           type="date"
-          value={birthday}
-          onChange={(e) => setBirthday(e.target.value)}
+          name="birthday"
+          onChange={handleChange}
+          value={formData.birthday}
           required
         />
       </label>
 
-      <button type="submit">Submit</button>
+      <button type="submit">Sign Up</button>
     </form>
   );
 };

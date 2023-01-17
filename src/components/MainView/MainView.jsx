@@ -3,8 +3,11 @@ import MovieCard from "../MovieCard/MovieCard";
 import MovieView from "../MovieView/MovieView";
 import LoginView from "../LoginView/LoginView";
 import SignupView from "../SignupView/SignupView";
+import ErrorPage from "../ErrorPage/ErrorPage";
+
 import { Row } from "react-bootstrap";
 import { Navigate, Route, Routes } from "react-router-dom";
+import Navigation from "../Navigation/Navigation";
 
 const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -43,69 +46,71 @@ const MainView = () => {
   }
 
   if (selectedMovie) {
-    return <MovieView movie={selectedMovie}/>
+    return <MovieView movie={selectedMovie} />;
   }
 
   return (
-    <Routes>
-      <Route
-        path="/signup"
-        element={user ? <Navigate to="/" /> : <SignupView />}
+    <>
+      <Navigation
+        user={user}
+        onLoggedOut={() => {
+          setUser(null);
+          setToken(null);
+          localStorage.clear();
+        }}
       />
+      <Routes>
+        <Route
+          path="/signup"
+          element={user ? <Navigate to="/" /> : <SignupView />}
+        />
 
-      <Route
-        path="/login"
-        element={
-          user ? (
-            <Navigate to="/" />
-          ) : (
-            <LoginView
-              onLoggedIn={(user, token) => {
-                setUser(user);
-                setToken(token);
-              }}
-            />
-          )
-        }
-      />
-
-      <Route
-        path="/movies/:movieId"
-        element={!user ? <Navigate to="/login" replace /> : <MovieView />}
-      />
-
-      <Route
-        path="/"
-        element={
-          !user ? (
-            <Navigate to="/login" replace />
-          ) : (
-            <>
-              <Row xs={1} sm={2} md={3} lg={4} className="g-4 m-4">
-                {movies.map((movie) => (
-                  <MovieCard
-                    key={movie._id}
-                    movie={movie}
-                    onMovieClick={(newSelectedMovie) => {
-                      setSelectedMovie(newSelectedMovie);
-                    }}
-                  />
-                ))}
-              </Row>
-              <button
-                onClick={() => {
-                  setUser(null);
-                  setToken(null);
-                  localStorage.clear();
+        <Route
+          path="/login"
+          element={
+            user ? (
+              <Navigate to="/" />
+            ) : (
+              <LoginView
+                onLoggedIn={(user, token) => {
+                  setUser(user);
+                  setToken(token);
                 }}
-              >
-                Logout
-              </button>
-            </>
-          )
-        }
-      />
-    </Routes>
+              />
+            )
+          }
+        />
+
+        <Route
+          path="/movies/:movieId"
+          element={!user ? <Navigate to="/login" replace /> : <MovieView />}
+        />
+
+        <Route
+          path="/"
+          element={
+            !user ? (
+              <Navigate to="/login" replace />
+            ) : (
+              <>
+                <Row xs={1} sm={2} md={3} lg={4} className="g-4 m-4">
+                  {movies.map((movie) => (
+                    <MovieCard
+                      key={movie._id}
+                      movie={movie}
+                      onMovieClick={(newSelectedMovie) => {
+                        setSelectedMovie(newSelectedMovie);
+                      }}
+                    />
+                  ))}
+                </Row>
+              </>
+            )
+          }
+        />
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+    </>
   );
 };
 

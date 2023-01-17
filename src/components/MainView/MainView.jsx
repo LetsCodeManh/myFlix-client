@@ -84,7 +84,7 @@ const MainView = () => {
 
   return (
     <div>
-      <Row xs={2} md={3} className="g-4 m-4">
+      <Row xs={1} sm={2} md={3} lg={4} className="g-4 m-4">
         {movies.map((movie) => (
           <MovieCard
             key={movie.id}

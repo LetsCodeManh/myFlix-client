@@ -12018,4 +12018,8 @@ textarea.form-control-lg {
   }
 }
 
+.movieImage {
+  object-fit: cover;
+}
+
 /*# sourceMappingURL=index.eb946816.css.map */

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Button, FloatingLabel, Form } from "react-bootstrap";
 
 const SignupView = () => {
   const [formData, setFormData] = useState({
@@ -33,52 +34,69 @@ const SignupView = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Username:
-        <input
+    <Form
+      onSubmit={handleSubmit}
+      className="p-5 square border border-primary rounded-3 m-5"
+    >
+      <h1 className="mb-3">Sign Up</h1>
+      <FloatingLabel
+        controlId="floatingUsernameSignup"
+        label="Username"
+        className="mb-3"
+      >
+        <Form.Control
           type="text"
           name="username"
           onChange={handleChange}
           value={formData.username}
           minLength="5"
+          placeholder="Username"
           required
         />
-      </label>
-      <label>
-        Password:
-        <input
+      </FloatingLabel>
+      <FloatingLabel
+        controlId="floatingPasswordSignup"
+        label="Password"
+        className="mb-3"
+      >
+        <Form.Control
           type="password"
           name="password"
           onChange={handleChange}
           value={formData.password}
           minLength="5"
+          placeholder="Password"
           required
         />
-      </label>
-      <label>
-        Email:
-        <input
+      </FloatingLabel>
+      <FloatingLabel controlId="floatingEmailSignup" label="Email" className="mb-3">
+        <Form.Control
           type="email"
           name="email"
           onChange={handleChange}
           value={formData.email}
+          placeholder="Email"
           required
         />
-      </label>
-      <label>
-        Birthday:
-        <input
+      </FloatingLabel>
+      <FloatingLabel
+        controlId="floatingBirthdaySignup"
+        label="Birthday"
+        className="mb-3"
+      >
+        <Form.Control
           type="date"
           name="birthday"
           onChange={handleChange}
           value={formData.birthday}
           required
         />
-      </label>
+      </FloatingLabel>
 
-      <button type="submit">Sign Up</button>
-    </form>
+      <Button type="submit" variant="primary">
+        Sign Up
+      </Button>
+    </Form>
   );
 };
 

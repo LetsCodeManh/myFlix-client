@@ -37,9 +37,14 @@ const LoginView = ({ onLoggedIn }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit} className="p-5">
+    <Form
+      onSubmit={handleSubmit}
+      className="p-5 square border border-primary rounded-3 m-5"
+      
+    >
+      <h1 className="mb-3">Login</h1>
       <FloatingLabel
-        controlId="floatingUsername"
+        controlId="floatingUsernameLogin"
         label="Username"
         className="mb-3"
       >
@@ -54,7 +59,7 @@ const LoginView = ({ onLoggedIn }) => {
       </FloatingLabel>
 
       <FloatingLabel
-        controlId="floatingPassword"
+        controlId="floatingPasswordLogin"
         label="Password"
         className="mb-3"
       >

@@ -1,7 +1,5 @@
 import { useState } from "react";
-
-// Username: 167OLdP5BUfLZGxP
-// Password: K39eKYhPMV9DDWhJ
+import { Button, FloatingLabel, Form } from "react-bootstrap";
 
 const LoginView = ({ onLoggedIn }) => {
   const [formData, setFormData] = useState({
@@ -28,7 +26,7 @@ const LoginView = ({ onLoggedIn }) => {
         }
       })
       .catch((e) => {
-        console.error(e)
+        console.error(e);
         alert("Something went wrong");
       });
   };
@@ -39,29 +37,41 @@ const LoginView = ({ onLoggedIn }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Username:
-        <input
+    <Form onSubmit={handleSubmit} className="p-5">
+      <FloatingLabel
+        controlId="floatingUsername"
+        label="Username"
+        className="mb-3"
+      >
+        <Form.Control
           type="text"
           name="username"
           onChange={handleChange}
           value={formData.username}
+          placeholder="Username"
           required
         />
-      </label>
-      <label>
-        Password:
-        <input
+      </FloatingLabel>
+
+      <FloatingLabel
+        controlId="floatingPassword"
+        label="Password"
+        className="mb-3"
+      >
+        <Form.Control
           type="password"
           name="password"
           onChange={handleChange}
           value={formData.password}
+          placeholder="Password"
           required
         />
-      </label>
-      <button type="submit">Submit</button>
-    </form>
+      </FloatingLabel>
+
+      <Button type="submit" variant="primary">
+        Submit
+      </Button>
+    </Form>
   );
 };
 

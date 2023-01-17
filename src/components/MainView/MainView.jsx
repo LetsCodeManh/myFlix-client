@@ -1,27 +1,48 @@
 import { useEffect, useState } from "react";
-import BookCard from "../BookCard/BookCard";
-import BookView from "../BookView/BookView";
+import MovieCard from "../MovieCard/MovieCard";
+import MovieView from "../MovieView/MovieView";
 import LoginView from "../LoginView/LoginView";
 import SignupView from "../SignupView/SignupView";
 
 const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
-  const [books, setBooks] = useState([]);
-  const [selectedBook, setSelectedBook] = useState(null);
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
+
+  const [user, setUser] = useState(storedUser ? storedUser : null);
+  const [token, setToken] = useState(storedToken ? storedToken : null);
+
+  const [movies, setMovies] = useState([]);
+  const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
     fetch("https://young-journey-11100.herokuapp.com/movies")
       .then((response) => response.json())
-      .then((data) => {});
+      .then((data) => {
+        const booksFromApi = data.docs.map((doc) => {
+          return {
+            id: doc.key,
+            title: doc.title,
+            image: doc.imagePath,
+            author: doc.author,
+          };
+        });
+
+        setMovies(booksFromApi);
+      });
   });
 
   useEffect(() => {
     if (!token) {
       return;
     }
+
+    fetch("https://young-journey-11100.herokuapp.com/movies", {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((response) => response.json())
+      .then((movies) => {
+        setMovies(movies);
+      });
 
     fetch("https://young-journey-11100.herokuapp.com/login", {
       headers: { Authorization: `Bearer ${token}` },
@@ -47,20 +68,23 @@ const MainView = () => {
     );
   }
 
-  if (selectedBook) {
+  if (selectedMovie) {
     return (
-      <BookView book={selectedBook} onBackClick={() => setSelectedBook(null)} />
+      <MovieView
+        book={selectedMovie}
+        onBackClick={() => setSelectedMovie(null)}
+      />
     );
   }
 
-  if (books.length === 0) {
+  if (movies.length === 0) {
     return <div>The list is empty!</div>;
   }
 
   return (
     <div>
-      {books.map((book) => (
-        <BookCard
+      {movies.map((book) => (
+        <MovieCard
           key={book.id}
           book={book}
           onBookClick={(newSelectedBook) => {

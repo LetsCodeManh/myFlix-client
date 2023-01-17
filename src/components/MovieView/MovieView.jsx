@@ -1,15 +1,9 @@
 import { Button, Card, Col, Row } from "react-bootstrap";
-import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import DirectorsList from "../DirectorList/DirectorList";
 import GenreList from "../GenreList/GenreList";
-import "./index.scss";
 
-const MovieView = ({ movies }) => {
-  const { movieId } = useParams();
-
-  const movie = movies.find((movie) => movie.id === movie.movieId);
-
+const MovieView = ({ movie }) => {
   return (
     <Row xs={1} md={2} className="g-4 m-4">
       <Col className="w-100">

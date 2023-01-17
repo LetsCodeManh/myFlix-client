@@ -12018,14 +12018,4 @@ textarea.form-control-lg {
   }
 }
 
-.movieImage {
-  object-fit: cover;
-}
-
-@media (min-width: 500px) {
-  .movieImage {
-    height: 600px;
-  }
-}
-
 /*# sourceMappingURL=index.eb946816.css.map */

@@ -38,17 +38,12 @@ const MainView = () => {
       });
   }, [token]);
 
-  // if (selectedMovie) {
-  //   return (
-  //     <MovieView
-  //       movie={selectedMovie}
-  //       onBackClick={() => setSelectedMovie(null)}
-  //     />
-  //   );
-  // }
-
   if (movies.length === 0) {
     return <div>The list is empty!</div>;
+  }
+
+  if (selectedMovie) {
+    return <MovieView movie={selectedMovie}/>
   }
 
   return (
@@ -76,15 +71,7 @@ const MainView = () => {
 
       <Route
         path="/movies/:movieId"
-        element={
-          !user ? (
-            <Navigate to="/login" replace />
-          ) : (
-            <MovieView
-              movies={movies}
-            />
-          )
-        }
+        element={!user ? <Navigate to="/login" replace /> : <MovieView />}
       />
 
       <Route
@@ -97,8 +84,11 @@ const MainView = () => {
               <Row xs={1} sm={2} md={3} lg={4} className="g-4 m-4">
                 {movies.map((movie) => (
                   <MovieCard
-                    key={movie.id}
+                    key={movie._id}
                     movie={movie}
+                    onMovieClick={(newSelectedMovie) => {
+                      setSelectedMovie(newSelectedMovie);
+                    }}
                   />
                 ))}
               </Row>

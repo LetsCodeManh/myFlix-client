@@ -3,7 +3,7 @@ import { Button, Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./index.scss";
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({ movie, onMovieClick }) => {
   return (
     <Col>
       <Card className="h-100">
@@ -18,8 +18,12 @@ const MovieCard = ({ movie }) => {
           <Card.Text className="movieDescription">
             {movie.description}
           </Card.Text>
-          <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
-            <Button type="submit" variant="primary">
+          <Link to={`/movies/${movie._id}`}>
+            <Button
+              type="submit"
+              variant="primary"
+              onClick={() => onMovieClick(movie)}
+            >
               Read More!
             </Button>
           </Link>

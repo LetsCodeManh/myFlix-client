@@ -5,9 +5,9 @@ const GenreList = ({ genres }) => {
     <>
       {genres.map((genre, index) => {
         return (
-          <Card.Body>
-            <Card.Title key={index}>{genre.name}</Card.Title>
-            <Card.Text key={index}>{genre.description}</Card.Text>
+          <Card.Body key={index}>
+            <Card.Title>{genre.name}</Card.Title>
+            <Card.Text>{genre.description}</Card.Text>
           </Card.Body>
         );
       })}

@@ -10,6 +10,10 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
 import ProfileView from "../ProfileView/ProfileView";
 
+import { useSelector, useDispatch } from "react-redux";
+import { setMovies } from "../../redux/reducers/movies";
+import axios from "axios";
+
 const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedToken = localStorage.getItem("token");
@@ -17,30 +21,34 @@ const MainView = () => {
   const [user, setUser] = useState(storedUser ? storedUser : null);
   const [token, setToken] = useState(storedToken ? storedToken : null);
 
-  const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
+  const movies = useSelector((state) => state.movies.list);
+  const dispatch = useDispatch();
+
+  const getMovies = (token) => {
+    axios
+      .get("https://young-journey-11100.herokuapp.com/movies", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        dispatch(setMovies(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const onLoggedIn = (authData) => {
+    localStorage.setItem("token", authData.token);
+    dispatch(setUser(authData.user));
+  };
+
   useEffect(() => {
-    if (!token) {
-      return;
+    if (token !== null) {
+      getMovies(token)
     }
-
-    fetch("https://young-journey-11100.herokuapp.com/movies", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((response) => response.json())
-      .then((movies) => {
-        setMovies(movies);
-      });
-
-    fetch("https://young-journey-11100.herokuapp.com/login", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-      });
-  }, [token]);
+  }, [token]) 
 
   if (movies.length === 0) {
     return <div>The list is empty!</div>;
@@ -82,10 +90,7 @@ const MainView = () => {
           }
         />
 
-        <Route
-          path="/profile"
-          element={<ProfileView user={user}/>}
-        />
+        <Route path="/profile" element={<ProfileView user={user} />} />
 
         <Route
           path="/movies/:movieId"

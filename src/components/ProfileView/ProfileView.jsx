@@ -1,7 +1,10 @@
+import axios from "axios";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
-const ProfileView = ({ user }) => {
+const ProfileView = () => {
   const [editing, setEditing] = useState(false);
+  const user = useSelector((state) => state.user);
   const [updatedUser, setUpdatedUser] = useState({ ...user });
 
   const handleEdit = () => {
@@ -10,17 +13,12 @@ const ProfileView = ({ user }) => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(
+      const response = await axios.put(
         `https://young-journey-11100.herokuapp.com/user/${user.username}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(updatedUser),
-        }
+        updatedUser
       );
-      const json = await response.json();
-      if (!response.ok) {
-        throw new Error(json.message);
+      if (response.status !== 200) {
+        throw new Error(response.data.message);
       }
       setEditing(false);
     } catch (error) {

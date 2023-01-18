@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
-import { Button, FloatingLabel, Form, InputGroup } from "react-bootstrap";
+import { Button, FloatingLabel, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const LoginView = ({ onLoggedIn }) => {

@@ -21,7 +21,7 @@ const MovieList = () => {
         {filteredMovies.length === 0 ? (
           <LoadingPage />
         ) : (
-          filteredMovies.map((movie) => (
+          movies.map((movie) => (
             <MovieCard key={movie._id} movie={movie} />
           ))
         )}

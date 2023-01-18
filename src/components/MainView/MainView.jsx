@@ -1,23 +1,22 @@
 import { useEffect } from "react";
 import axios from "axios";
 
+import { Navigate, Route, Routes } from "react-router-dom";
+
+import ErrorPage from "../ErrorPage/ErrorPage";
+import Navigation from "../Navigation/Navigation";
+import LoginView from "../LoginView/LoginView";
+import SignupView from "../SignupView/SignupView";
+import ProfileView from "../ProfileView/ProfileView";
+import MovieList from "../MovieList/MovieList";
+import MovieView from "../MovieView/MovieView";
+
 import { useSelector, useDispatch } from "react-redux";
 import { setMovies } from "../../redux/reducers/movies";
 import { setUser } from "../../redux/reducers/user";
 
-import { Navigate, Route, Routes } from "react-router-dom";
-
-import MovieView from "../MovieView/MovieView";
-import LoginView from "../LoginView/LoginView";
-import SignupView from "../SignupView/SignupView";
-import ErrorPage from "../ErrorPage/ErrorPage";
-import Navigation from "../Navigation/Navigation";
-import ProfileView from "../ProfileView/ProfileView";
-
-import MovieList from "../MovieList/MovieList";
-
 const MainView = () => {
-  const movies = useSelector((state) => state.movies.list);
+  const movies = useSelector((state) => state.user);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 

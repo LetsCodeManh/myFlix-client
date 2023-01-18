@@ -3,7 +3,7 @@ import { Button, Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./index.scss";
 
-const MovieCard = ({ movie }) => {
+const MovieCard = ({movie}) => {
   return (
     <Col>
       <Card className="h-100">
@@ -22,7 +22,6 @@ const MovieCard = ({ movie }) => {
             <Button
               type="submit"
               variant="primary"
-              onClick={() => onMovieClick(movie)}
             >
               Read More!
             </Button>

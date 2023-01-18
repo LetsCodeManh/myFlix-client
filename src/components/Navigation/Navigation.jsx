@@ -33,7 +33,7 @@ const Navigation = () => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav>
-          {isLoggedIn && (
+          {!isLoggedIn() ? (
             <>
               <Nav.Link as={Link} to="/login">
                 Login
@@ -42,14 +42,13 @@ const Navigation = () => {
                 Signup
               </Nav.Link>
             </>
-          )}
-          {!isLoggedIn && (
+          ) : (
             <>
               <Nav.Link as={Link} to="/">
                 Home
               </Nav.Link>
               <Nav.Link as={Link} to={`/users/${user.username}`}>
-                {user.username}
+                Profile
               </Nav.Link>
               <Nav.Link onClick={onLoggedOut}>Logout</Nav.Link>
             </>

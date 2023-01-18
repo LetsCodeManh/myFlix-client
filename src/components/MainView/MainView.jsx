@@ -47,18 +47,14 @@ const MainView = () => {
     }
   }, [token]);
 
-
   return (
     <>
-      <Navigation
-        user={user}
-        onLoggedOut={() => {
-          setUser(null);
-          setToken(null);
-          localStorage.clear();
-        }}
-      />
+      <Navigation />
       <Routes>
+        <Route
+          path="/"
+          element={!user ? <Navigate to="/login" replace /> : <MovieList />}
+        />
         <Route
           path="/signup"
           element={user ? <Navigate to="/" /> : <SignupView />}
@@ -84,10 +80,6 @@ const MainView = () => {
           element={!user ? <Navigate to="/login" replace /> : <MovieView />}
         />
 
-        <Route
-          path="/"
-          element={!user ? <Navigate to="/login" replace /> : <MovieList />}
-        />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </>

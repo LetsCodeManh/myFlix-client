@@ -1,5 +1,5 @@
+import { Form, Row } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
-import { Form } from "react-router-dom";
 import { setFilter } from "../../redux/reducers/movies";
 
 const MoviesFilter = () => {
@@ -7,13 +7,14 @@ const MoviesFilter = () => {
   const dispatch = useDispatch();
 
   return (
-    <Form.Control
-      size="sm"
-      type="text"
-      placeholder="Search..."
-      value={filter}
-      onChange={(e) => dispatch(setFilter(e.target.value))}
-    />
+    <Form className="m-4">
+      <Form.Control
+        type="text"
+        placeholder="Search..."
+        value={filter}
+        onChange={(e) => dispatch(setFilter(e.target.value))}
+      />
+    </Form>
   );
 };
 

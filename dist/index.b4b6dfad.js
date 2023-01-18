@@ -51768,7 +51768,7 @@ const SignupView = ()=>{
     const [usernameErr, setUsernameErr] = (0, _react.useState)("");
     const [passwordErr, setPasswordErr] = (0, _react.useState)("");
     const [emailErr, setEmailErr] = (0, _react.useState)("");
-    const [setbirthdayErr, setBirthdayErr] = (0, _react.useState)("");
+    const [birthdayErr, setBirthdayErr] = (0, _react.useState)("");
     const validate = ()=>{
         let isReq = true;
         if (!username) {
@@ -51788,7 +51788,7 @@ const SignupView = ()=>{
         if (!email) {
             setEmailErr("Email Required");
             isReq = false;
-        } else if (email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)) {
+        } else if (!email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)) {
             setEmailErr("Invalid email address");
             isReq = false;
         }
@@ -51945,7 +51945,7 @@ const SignupView = ()=>{
         columnNumber: 5
     }, undefined);
 };
-_s(SignupView, "4qwQQrR+eEHslM2Dg8ApRaCJSdI=");
+_s(SignupView, "7SrRlraPc/cIMHEk0O+Fp0rdk6M=");
 _c = SignupView;
 exports.default = SignupView;
 var _c;

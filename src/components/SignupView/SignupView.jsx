@@ -12,7 +12,7 @@ const SignupView = () => {
   const [usernameErr, setUsernameErr] = useState("");
   const [passwordErr, setPasswordErr] = useState("");
   const [emailErr, setEmailErr] = useState("");
-  const [setbirthdayErr, setBirthdayErr] = useState("");
+  const [birthdayErr, setBirthdayErr] = useState("");
 
   const validate = () => {
     let isReq = true;
@@ -35,7 +35,7 @@ const SignupView = () => {
     if (!email) {
       setEmailErr("Email Required");
       isReq = false;
-    } else if (email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)) {
+    } else if (!email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)) {
       setEmailErr("Invalid email address");
       isReq = false;
     }

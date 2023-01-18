@@ -1,30 +1,27 @@
-import { useEffect, useState } from "react";
-import MovieCard from "../MovieCard/MovieCard";
+import { useEffect } from "react";
+import axios from "axios";
+
+import { useSelector, useDispatch } from "react-redux";
+import { setMovies } from "../../redux/reducers/movies";
+import { setUser } from "../../redux/reducers/user";
+
+import { Navigate, Route, Routes } from "react-router-dom";
+
 import MovieView from "../MovieView/MovieView";
 import LoginView from "../LoginView/LoginView";
 import SignupView from "../SignupView/SignupView";
 import ErrorPage from "../ErrorPage/ErrorPage";
-
-import { Row } from "react-bootstrap";
-import { Navigate, Route, Routes } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
 import ProfileView from "../ProfileView/ProfileView";
 
-import { useSelector, useDispatch } from "react-redux";
-import { setMovies } from "../../redux/reducers/movies";
-import axios from "axios";
+import MovieList from "../MovieList/MovieList";
 
 const MainView = () => {
-  const storedUser = JSON.parse(localStorage.getItem("user"));
-  const storedToken = localStorage.getItem("token");
-
-  const [user, setUser] = useState(storedUser ? storedUser : null);
-  const [token, setToken] = useState(storedToken ? storedToken : null);
-
-  const [selectedMovie, setSelectedMovie] = useState(null);
-
   const movies = useSelector((state) => state.movies.list);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
+  const token = localStorage.getItem("token");
 
   const getMovies = (token) => {
     axios
@@ -46,16 +43,12 @@ const MainView = () => {
 
   useEffect(() => {
     if (token !== null) {
-      getMovies(token)
+      getMovies(token);
     }
-  }, [token]) 
+  }, [token]);
 
   if (movies.length === 0) {
     return <div>The list is empty!</div>;
-  }
-
-  if (selectedMovie) {
-    return <MovieView movie={selectedMovie} />;
   }
 
   return (
@@ -81,16 +74,13 @@ const MainView = () => {
               <Navigate to="/" />
             ) : (
               <LoginView
-                onLoggedIn={(user, token) => {
-                  setUser(user);
-                  setToken(token);
-                }}
+                onLoggedIn={(authResponse) => onLoggedIn(authResponse)}
               />
             )
           }
         />
 
-        <Route path="/profile" element={<ProfileView user={user} />} />
+        <Route path="/users/:username" element={<ProfileView />} />
 
         <Route
           path="/movies/:movieId"
@@ -99,25 +89,7 @@ const MainView = () => {
 
         <Route
           path="/"
-          element={
-            !user ? (
-              <Navigate to="/login" replace />
-            ) : (
-              <>
-                <Row xs={1} sm={2} md={3} lg={4} className="g-4 m-4">
-                  {movies.map((movie) => (
-                    <MovieCard
-                      key={movie._id}
-                      movie={movie}
-                      onMovieClick={(newSelectedMovie) => {
-                        setSelectedMovie(newSelectedMovie);
-                      }}
-                    />
-                  ))}
-                </Row>
-              </>
-            )
-          }
+          element={!user ? <Navigate to="/login" replace /> : <MovieList />}
         />
         <Route path="*" element={<ErrorPage />} />
       </Routes>

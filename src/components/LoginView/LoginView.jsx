@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { Button, FloatingLabel, Form } from "react-bootstrap";
 
@@ -6,29 +7,49 @@ const LoginView = ({ onLoggedIn }) => {
     name: "",
     password: "",
   });
+  const [formDataErr, setFormDataErr] = useState({
+    name: "",
+    password: "",
+  });
+
+  const validate = () => {
+    let isReq = true;
+    if (!formData.name) {
+      setFormDataErr.name("Username Required");
+      isReq = false;
+    } else if (formData.name.length < 5) {
+      setFormDataErr.name("Username must be at least 5 characters long");
+      isReq = false;
+    }
+
+    if (!formData.password) {
+      setFormDataErr.password("Password Required");
+      isReq = false;
+    } else if (formData.password.length < 5) {
+      setFormDataErr.password("Password must be at least 5 characters long");
+      isReq = false;
+    }
+
+    return isReq;
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    fetch("https://young-journey-11100.herokuapp.com/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Login response: ", data);
-        if (data.user) {
-          localStorage.setItem("user", JSON.stringify(data.user));
-          localStorage.setItem("token", data.token);
-          onLoggedIn(data.user, data.token);
-        } else {
-          alert("No such user");
-        }
-      })
-      .catch((e) => {
-        console.error(e);
-        alert("Something went wrong");
-      });
+    const isReq = validate();
+    if (isReq) {
+      axios
+        .post("https://young-journey-11100.herokuapp.com/login", {
+          username: username,
+          password: password,
+        })
+        .then((response) => {
+          const data = response.data;
+          onLoggedIn(data);
+        })
+        .catch((error) => {
+          console.log("The user or password is incorrect!" + error);
+        });
+    }
   };
 
   const handleChange = (event) => {
@@ -40,7 +61,6 @@ const LoginView = ({ onLoggedIn }) => {
     <Form
       onSubmit={handleSubmit}
       className="p-5 square border border-primary rounded-3 m-5"
-      
     >
       <h1 className="mb-3">Login</h1>
       <FloatingLabel

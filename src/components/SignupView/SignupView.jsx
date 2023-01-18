@@ -1,52 +1,47 @@
 import axios from "axios";
 import { useState } from "react";
 import { Button, FloatingLabel, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const SignupView = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    email: "",
-    birthday: "",
-  });
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [birthday, setBirthday] = useState("");
 
-  const [formDataErr, setFormDataErr] = useState({
-    username: "",
-    password: "",
-    email: "",
-    birthday: "",
-  });
+  const [usernameErr, setUsernameErr] = useState("");
+  const [passwordErr, setPasswordErr] = useState("");
+  const [emailErr, setEmailErr] = useState("");
+  const [setbirthdayErr, setBirthdayErr] = useState("");
 
   const validate = () => {
     let isReq = true;
-    if (!formData.name) {
-      setFormDataErr.name("Username Required");
+    if (!username) {
+      setUsernameErr("Username Required");
       isReq = false;
-    } else if (formData.name.length < 5) {
-      setFormDataErr.name("Username must be at least 5 characters long");
-      isReq = false;
-    }
-
-    if (!formData.password) {
-      setFormDataErr.password("Password Required");
-      isReq = false;
-    } else if (formData.password.length < 5) {
-      setFormDataErr.password("Password must be at least 5 characters long");
+    } else if (username.length < 5) {
+      setUsernameErr("Username must be at least 5 characters long");
       isReq = false;
     }
 
-    if (!formData.email) {
-      setFormDataErr.email("Email Required");
+    if (!password) {
+      setPasswordErr("Password Required");
       isReq = false;
-    } else if (
-      formData.email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)
-    ) {
-      setFormDataErr.email("Invalid email address");
+    } else if (password.length < 5) {
+      setPasswordErr("Password must be at least 5 characters long");
       isReq = false;
     }
 
-    if (!formData.birthday) {
-      setFormDataErr.birthday("Email Required");
+    if (!email) {
+      setEmailErr("Email Required");
+      isReq = false;
+    } else if (email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i)) {
+      setEmailErr("Invalid email address");
+      isReq = false;
+    }
+
+    if (!birthday) {
+      setBirthdayErr("Email Required");
       isReq = false;
     }
 
@@ -75,15 +70,10 @@ const SignupView = () => {
     }
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
   return (
     <Form
       onSubmit={handleSubmit}
-      className="p-5 square border border-primary rounded-3 m-5"
+      className="p-4 square border border-primary rounded-3 m-5"
     >
       <h1 className="mb-3">Sign Up</h1>
       <FloatingLabel
@@ -94,8 +84,8 @@ const SignupView = () => {
         <Form.Control
           type="text"
           name="username"
-          onChange={handleChange}
-          value={formData.username}
+          onChange={(e) => setUsername(e.target.value)}
+          value={username}
           minLength="5"
           placeholder="Username"
           required
@@ -109,8 +99,8 @@ const SignupView = () => {
         <Form.Control
           type="password"
           name="password"
-          onChange={handleChange}
-          value={formData.password}
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
           minLength="5"
           placeholder="Password"
           required
@@ -124,8 +114,8 @@ const SignupView = () => {
         <Form.Control
           type="email"
           name="email"
-          onChange={handleChange}
-          value={formData.email}
+          onChange={(e) => setEmail(e.target.value)}
+          value={email}
           placeholder="Email"
           required
         />
@@ -138,15 +128,20 @@ const SignupView = () => {
         <Form.Control
           type="date"
           name="birthday"
-          onChange={handleChange}
-          value={formData.birthday}
+          onChange={(e) => setBirthday(e.target.value)}
+          value={birthday}
           required
         />
       </FloatingLabel>
 
-      <Button type="submit" variant="primary">
-        Sign Up
-      </Button>
+      <div className="d-flex gap-3">
+        <Button type="submit" variant="primary">
+          Submit
+        </Button>
+        <Button as={Link} to="/login" variant="primary">
+          Login
+        </Button>
+      </div>
     </Form>
   );
 };

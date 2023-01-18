@@ -8,6 +8,7 @@ import ErrorPage from "../ErrorPage/ErrorPage";
 import { Row } from "react-bootstrap";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
+import ProfileView from "../ProfileView/ProfileView";
 
 const MainView = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
@@ -79,6 +80,11 @@ const MainView = () => {
               />
             )
           }
+        />
+
+        <Route
+          path="/profile"
+          element={<ProfileView user={user}/>}
         />
 
         <Route

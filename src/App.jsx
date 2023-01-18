@@ -1,11 +1,15 @@
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 import { BrowserRouter } from "react-router-dom";
 import MainView from "./components/MainView/Mainview";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <MainView />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <MainView />
+      </BrowserRouter>
+    </Provider>
   );
 };
 

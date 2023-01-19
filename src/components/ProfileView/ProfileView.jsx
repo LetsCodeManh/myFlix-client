@@ -16,7 +16,7 @@ const ProfileView = () => {
   const handleSave = async () => {
     try {
       const response = await axios.put(
-        `https://young-journey-11100.herokuapp.com/user/${user.username}`,
+        `https://young-journey-11100.herokuapp.com/users/${user.username}`,
         updatedUser,
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },

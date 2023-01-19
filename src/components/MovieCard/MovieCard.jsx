@@ -3,7 +3,7 @@ import { Button, Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./index.scss";
 
-const MovieCard = ({movie}) => {
+const MovieCard = ({ movie }) => {
   return (
     <Col>
       <Card className="h-100">
@@ -19,10 +19,7 @@ const MovieCard = ({movie}) => {
             {movie.description}
           </Card.Text>
           <Link to={`/movies/${movie._id}`}>
-            <Button
-              type="submit"
-              variant="primary"
-            >
+            <Button type="submit" variant="primary">
               Read More!
             </Button>
           </Link>
@@ -33,7 +30,7 @@ const MovieCard = ({movie}) => {
 };
 
 MovieCard.propTypes = {
-  book: PropTypes.shape({
+  movie: PropTypes.shape({
     title: PropTypes.string,
     imagePath: PropTypes.string,
     description: PropTypes.string,

@@ -6,6 +6,8 @@ const ProfileView = () => {
   const [editing, setEditing] = useState(false);
   const user = useSelector((state) => state.user);
   const [updatedUser, setUpdatedUser] = useState({ ...user });
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   const handleEdit = () => {
     setEditing(true);
@@ -15,14 +17,18 @@ const ProfileView = () => {
     try {
       const response = await axios.put(
         `https://young-journey-11100.herokuapp.com/user/${user.username}`,
-        updatedUser
+        updatedUser,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
       );
       if (response.status !== 200) {
         throw new Error(response.data.message);
       }
+      setSuccess("User updated successfully.");
       setEditing(false);
     } catch (error) {
-      console.error("Error updating user:", error);
+      setError(error.message);
     }
   };
 
@@ -53,11 +59,11 @@ const ProfileView = () => {
             />
           </label>
           <label>
-            Email:
+            Password:
             <input
-              type="email"
-              name="email"
-              value={updatedUser.email}
+              type="password"
+              name="password"
+              value={updatedUser.password}
               onChange={handleChange}
             />
           </label>
@@ -67,7 +73,7 @@ const ProfileView = () => {
       ) : (
         <>
           <p>Username: {user.username}</p>
-          <p>Password: {user.password}</p>
+          <p>Password: *****</p>
           <p>Email: {user.email}</p>
           <p>Birthday: {user.birthday}</p>
           <p>FavoriteMovies: {user.favoriteMovies}</p>

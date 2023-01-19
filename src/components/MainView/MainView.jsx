@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { Navigate, Route, Routes } from "react-router-dom";
@@ -16,9 +16,10 @@ import { setMovies } from "../../redux/reducers/movies";
 import { setUser } from "../../redux/reducers/user";
 
 const MainView = () => {
-  const movies = useSelector((state) => state.user);
+  const movies = useSelector((state) => state.movies.list);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const [isFetched, setIsFetched] = useState(false)
 
   const token = localStorage.getItem("token");
 
@@ -28,6 +29,7 @@ const MainView = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
+        setIsFetched(true)
         dispatch(setMovies(response.data));
       })
       .catch((error) => {
@@ -41,10 +43,10 @@ const MainView = () => {
   };
 
   useEffect(() => {
-    if (token !== null) {
+    if (token !== null && !isFetched) {
       getMovies(token);
     }
-  }, [token]);
+  }, [token, isFetched]);
 
   return (
     <>

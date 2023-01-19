@@ -27329,9 +27329,6 @@ try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
-var _react = require("react");
-var _axios = require("axios");
-var _axiosDefault = parcelHelpers.interopDefault(_axios);
 var _reactRouterDom = require("react-router-dom");
 var _errorPage = require("../ErrorPage/ErrorPage");
 var _errorPageDefault = parcelHelpers.interopDefault(_errorPage);
@@ -27348,43 +27345,21 @@ var _movieListDefault = parcelHelpers.interopDefault(_movieList);
 var _movieView = require("../MovieView/MovieView");
 var _movieViewDefault = parcelHelpers.interopDefault(_movieView);
 var _reactRedux = require("react-redux");
-var _movies = require("../../redux/reducers/movies");
 var _user = require("../../redux/reducers/user");
 var _s = $RefreshSig$();
 const MainView = ()=>{
     _s();
-    const movies = (0, _reactRedux.useSelector)((state)=>state.movies.list);
     const user = (0, _reactRedux.useSelector)((state)=>state.user);
     const dispatch = (0, _reactRedux.useDispatch)();
-    const [isFetched, setIsFetched] = (0, _react.useState)(false);
-    const token = localStorage.getItem("token");
-    const getMovies = (token)=>{
-        (0, _axiosDefault.default).get("https://young-journey-11100.herokuapp.com/movies", {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }).then((response)=>{
-            setIsFetched(true);
-            dispatch((0, _movies.setMovies)(response.data));
-        }).catch((error)=>{
-            console.log(error);
-        });
-    };
     const onLoggedIn = (authData)=>{
         localStorage.setItem("token", authData.token);
         dispatch((0, _user.setUser)(authData.user));
     };
-    (0, _react.useEffect)(()=>{
-        if (token !== null && !isFetched) getMovies(token);
-    }, [
-        token,
-        isFetched
-    ]);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _navigationDefault.default), {}, void 0, false, {
                 fileName: "src/components/MainView/MainView.jsx",
-                lineNumber: 53,
+                lineNumber: 25,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Routes), {
@@ -27397,7 +27372,7 @@ const MainView = ()=>{
                         }, void 0, false, void 0, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieListDefault.default), {}, void 0, false, void 0, void 0)
                     }, void 0, false, {
                         fileName: "src/components/MainView/MainView.jsx",
-                        lineNumber: 55,
+                        lineNumber: 27,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27407,7 +27382,7 @@ const MainView = ()=>{
                         }, void 0, false, void 0, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _signupViewDefault.default), {}, void 0, false, void 0, void 0)
                     }, void 0, false, {
                         fileName: "src/components/MainView/MainView.jsx",
-                        lineNumber: 59,
+                        lineNumber: 31,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27419,7 +27394,7 @@ const MainView = ()=>{
                         }, void 0, false, void 0, void 0)
                     }, void 0, false, {
                         fileName: "src/components/MainView/MainView.jsx",
-                        lineNumber: 64,
+                        lineNumber: 36,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27427,7 +27402,7 @@ const MainView = ()=>{
                         element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _profileViewDefault.default), {}, void 0, false, void 0, void 0)
                     }, void 0, false, {
                         fileName: "src/components/MainView/MainView.jsx",
-                        lineNumber: 77,
+                        lineNumber: 49,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27438,7 +27413,7 @@ const MainView = ()=>{
                         }, void 0, false, void 0, void 0) : /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieViewDefault.default), {}, void 0, false, void 0, void 0)
                     }, void 0, false, {
                         fileName: "src/components/MainView/MainView.jsx",
-                        lineNumber: 79,
+                        lineNumber: 51,
                         columnNumber: 9
                     }, undefined),
                     /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactRouterDom.Route), {
@@ -27446,21 +27421,20 @@ const MainView = ()=>{
                         element: /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _errorPageDefault.default), {}, void 0, false, void 0, void 0)
                     }, void 0, false, {
                         fileName: "src/components/MainView/MainView.jsx",
-                        lineNumber: 84,
+                        lineNumber: 56,
                         columnNumber: 9
                     }, undefined)
                 ]
             }, void 0, true, {
                 fileName: "src/components/MainView/MainView.jsx",
-                lineNumber: 54,
+                lineNumber: 26,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true);
 };
-_s(MainView, "WxchtxpUnL7FhEWuVFJ2lpo5Ubg=", false, function() {
+_s(MainView, "xXvxOehHJpw/X5Imivu/2I1+3NA=", false, function() {
     return [
-        (0, _reactRedux.useSelector),
         (0, _reactRedux.useSelector),
         (0, _reactRedux.useDispatch)
     ];
@@ -27475,7 +27449,7 @@ $RefreshReg$(_c, "MainView");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react":"21dqq","../LoginView/LoginView":"7GV9H","../SignupView/SignupView":"fo9ag","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-router-dom":"9xmpe","../ErrorPage/ErrorPage":"bG4DJ","axios":"jo6P5","../MovieList/MovieList":"hokHo","react-redux":"bdVon","../../redux/reducers/movies":"l0qwl","../../redux/reducers/user":"e6tdF","../MovieView/MovieView":"208CJ","../Navigation/Navigation":"g5ygb","../ProfileView/ProfileView":"Ptnxa"}],"7GV9H":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","../LoginView/LoginView":"7GV9H","../SignupView/SignupView":"fo9ag","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","react-router-dom":"9xmpe","../ErrorPage/ErrorPage":"bG4DJ","../MovieList/MovieList":"hokHo","react-redux":"bdVon","../../redux/reducers/user":"e6tdF","../MovieView/MovieView":"208CJ","../Navigation/Navigation":"g5ygb","../ProfileView/ProfileView":"Ptnxa"}],"7GV9H":[function(require,module,exports) {
 var $parcel$ReactRefreshHelpers$0aaf = require("@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js");
 var prevRefreshReg = window.$RefreshReg$;
 var prevRefreshSig = window.$RefreshSig$;
@@ -50181,8 +50155,12 @@ try {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _jsxDevRuntime = require("react/jsx-dev-runtime");
+var _axios = require("axios");
+var _axiosDefault = parcelHelpers.interopDefault(_axios);
+var _react = require("react");
 var _reactBootstrap = require("react-bootstrap");
 var _reactRedux = require("react-redux");
+var _movies = require("../../redux/reducers/movies");
 var _loadingPage = require("../LoadingPage/LoadingPage");
 var _loadingPageDefault = parcelHelpers.interopDefault(_loadingPage);
 var _movieCard = require("../MovieCard/MovieCard");
@@ -50195,11 +50173,35 @@ const MovieList = ()=>{
     const movies = (0, _reactRedux.useSelector)((state)=>state.movies.list);
     const filter = (0, _reactRedux.useSelector)((state)=>state.movies.filter).trim().toLowerCase();
     const filteredMovies = movies.filter((movie)=>movie.title.toLowerCase().includes(filter));
+    const [isFetched, setIsFetched] = (0, _react.useState)("");
+    const dispatch = (0, _reactRedux.useDispatch)();
+    const token = localStorage.getItem("token");
+    const getMovies = (token)=>{
+        (0, _axiosDefault.default).get("https://young-journey-11100.herokuapp.com/movies", {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then((response)=>{
+            setIsFetched(true);
+            dispatch((0, _movies.setMovies)(response.data));
+        }).catch((error)=>{
+            console.log(error);
+        });
+    };
+    (0, _react.useEffect)(()=>{
+        if (token !== null && !isFetched) {
+            console.log("Token", token);
+            getMovies(token);
+        }
+    }, [
+        token,
+        isFetched
+    ]);
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _moviesFilterDefault.default), {}, void 0, false, {
                 fileName: "src/components/MovieList/MovieList.jsx",
-                lineNumber: 18,
+                lineNumber: 46,
                 columnNumber: 7
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _reactBootstrap.Row), {
@@ -50210,27 +50212,28 @@ const MovieList = ()=>{
                 className: "g-4 m-4",
                 children: filteredMovies.length === 0 ? /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _loadingPageDefault.default), {}, void 0, false, {
                     fileName: "src/components/MovieList/MovieList.jsx",
-                    lineNumber: 22,
+                    lineNumber: 50,
                     columnNumber: 11
                 }, undefined) : filteredMovies.map((movie)=>/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _movieCardDefault.default), {
                         movie: movie
                     }, movie._id, false, {
                         fileName: "src/components/MovieList/MovieList.jsx",
-                        lineNumber: 25,
+                        lineNumber: 53,
                         columnNumber: 13
                     }, undefined))
             }, void 0, false, {
                 fileName: "src/components/MovieList/MovieList.jsx",
-                lineNumber: 20,
+                lineNumber: 48,
                 columnNumber: 7
             }, undefined)
         ]
     }, void 0, true);
 };
-_s(MovieList, "Xcx825YARwmJvJauFfffqjU7EdA=", false, function() {
+_s(MovieList, "wBAaq/skCGBc0jLXG4+VlwwSr/E=", false, function() {
     return [
         (0, _reactRedux.useSelector),
-        (0, _reactRedux.useSelector)
+        (0, _reactRedux.useSelector),
+        (0, _reactRedux.useDispatch)
     ];
 });
 _c = MovieList;
@@ -50243,7 +50246,7 @@ $RefreshReg$(_c, "MovieList");
   window.$RefreshReg$ = prevRefreshReg;
   window.$RefreshSig$ = prevRefreshSig;
 }
-},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react-redux":"bdVon","../MovieCard/MovieCard":"99v78","../MoviesFilter/MoviesFilter":"6zDxs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","../LoadingPage/LoadingPage":"cet7c"}],"bdVon":[function(require,module,exports) {
+},{"react/jsx-dev-runtime":"iTorj","react-bootstrap":"3AD9A","react-redux":"bdVon","../MovieCard/MovieCard":"99v78","../MoviesFilter/MoviesFilter":"6zDxs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@parcel/transformer-react-refresh-wrap/lib/helpers/helpers.js":"km3Ru","../LoadingPage/LoadingPage":"cet7c","axios":"jo6P5","react":"21dqq","../../redux/reducers/movies":"l0qwl"}],"bdVon":[function(require,module,exports) {
 // The primary entry point assumes we're working with standard ReactDOM/RN, but
 // older versions that do not include `useSyncExternalStore` (React 16.9 - 17.x).
 // Because of that, the useSyncExternalStore compat shim is needed.

@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-
 import { Navigate, Route, Routes } from "react-router-dom";
 
 import ErrorPage from "../ErrorPage/ErrorPage";
@@ -12,41 +9,16 @@ import MovieList from "../MovieList/MovieList";
 import MovieView from "../MovieView/MovieView";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setMovies } from "../../redux/reducers/movies";
 import { setUser } from "../../redux/reducers/user";
 
 const MainView = () => {
-  const movies = useSelector((state) => state.movies.list);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const [isFetched, setIsFetched] = useState(false)
-
-  const token = localStorage.getItem("token");
-
-  const getMovies = (token) => {
-    axios
-      .get("https://young-journey-11100.herokuapp.com/movies", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        setIsFetched(true)
-        dispatch(setMovies(response.data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
   const onLoggedIn = (authData) => {
     localStorage.setItem("token", authData.token);
     dispatch(setUser(authData.user));
   };
-
-  useEffect(() => {
-    if (token !== null && !isFetched) {
-      getMovies(token);
-    }
-  }, [token, isFetched]);
 
   return (
     <>

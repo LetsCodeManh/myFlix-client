@@ -37,7 +37,7 @@ const FavoriteButtonIcon = ({ movie }) => {
       try {
         setIsFavorite((prev) => !prev);
         dispatch(favoriteAdded(movie._id));
-        await axios.put(
+        await axios.post(
           `https://young-journey-11100.herokuapp.com/users/${user.username}/movies/${movie._id}`,
           {},
           {

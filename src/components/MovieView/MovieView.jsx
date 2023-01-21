@@ -31,13 +31,16 @@ const MovieView = () => {
           <Card.Body>
             <Card.Text>{movie.actors.join(", ")}</Card.Text>
 
-            <Button
-              type="submit"
-              variant="primary"
-              onClick={() => navigate(-1)}
-            >
-              Back
-            </Button>
+            <div className="d-flex gap-3">
+              <Button
+                type="submit"
+                variant="primary"
+                onClick={() => navigate(-1)}
+              >
+                Back
+              </Button>
+              <FavoriteButtonIcon movie={movie} />
+            </div>
           </Card.Body>
         </Card>
       </Col>

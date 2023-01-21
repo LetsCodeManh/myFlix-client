@@ -6,9 +6,9 @@ import GenreList from "../GenreList/GenreList";
 
 const MovieView = () => {
   const navigate = useNavigate();
-  const movies = useSelector((state) => state.movie.list);
+  const movies = useSelector((state) => state.movies.list);
   let { movieId } = useParams();
-  let movie = movies.find((m) => m._id === movieId);
+  let movie = movies.find((movie) => movie._id === movieId);
 
   return (
     <Row xs={1} md={2} className="g-4 m-4">

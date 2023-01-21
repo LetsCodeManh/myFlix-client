@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useState } from "react";
+import { Button, FloatingLabel, Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import FavoriteMovies from "../FavoriteMovies/FavoriteMovies";
+import { format } from "date-fns";
 
 const ProfileView = () => {
   const [editing, setEditing] = useState(false);
@@ -44,43 +47,104 @@ const ProfileView = () => {
     });
   };
 
+  const formattedBirthday = format(new Date(updatedUser.birthday), "yyyy-MM-dd")
+
+  // const password = user.password
+  // const replacedPassword = "*".repeat(password.length)
+
   return (
-    <div>
-      <h1>Profile</h1>
+    <main className="p-5">
+      <h1 className="mb-4">Profile</h1>
       {editing ? (
-        <>
-          <label>
-            Name:
-            <input
+        <Form>
+          <FloatingLabel
+            controlId="floatingUsernameChanged"
+            label="Username"
+            className="mb-3"
+          >
+            <Form.Control
               type="text"
               name="username"
-              value={updatedUser.username}
               onChange={handleChange}
+              value={updatedUser.username}
+              placeholder="Username"
             />
-          </label>
-          <label>
-            Password:
-            <input
+          </FloatingLabel>
+          <FloatingLabel
+            controlId="floatingPasswordChanged"
+            label="Password"
+            className="mb-3"
+          >
+            <Form.Control
               type="password"
               name="password"
-              value={updatedUser.password}
               onChange={handleChange}
+              value={updatedUser.password}
+              placeholder="Password"
             />
-          </label>
-          <button onClick={handleSave}>Save</button>
-          <button onClick={handleCancel}>Cancel</button>
-        </>
+          </FloatingLabel>
+
+          <FloatingLabel
+            controlId="floatingEmailChanged"
+            label="Email"
+            className="mb-3"
+          >
+            <Form.Control
+              type="email"
+              name="email"
+              onChange={handleChange}
+              value={updatedUser.email}
+              placeholder="Email"
+            />
+          </FloatingLabel>
+
+          <FloatingLabel
+            controlId="floatingBirthdayChanged"
+            label="Birthday"
+            className="mb-3"
+          >
+            <Form.Control
+              type="date"
+              name="birthday"
+              onChange={handleChange}
+              value={formattedBirthday}
+            />
+          </FloatingLabel>
+
+          <div className="d-flex gap-3">
+            <Button variant="primary" onClick={handleSave}>
+              Save
+            </Button>
+            <Button variant="primary" onClick={handleCancel}>
+              Cancel
+            </Button>
+          </div>
+        </Form>
       ) : (
-        <>
-          <p>Username: {user.username}</p>
-          <p>Password: *****</p>
-          <p>Email: {user.email}</p>
-          <p>Birthday: {user.birthday}</p>
-          <p>FavoriteMovies: {user.favoriteMovies}</p>
-          <button onClick={handleEdit}>Edit</button>
-        </>
+        <div>
+          <div>
+            <h4>Username</h4>
+            <p>{user.username}</p>
+          </div>
+          <div>
+            <h4>Password</h4>
+            <p>********</p>
+          </div>
+          <div>
+            <h4>Email</h4>
+            <p>{user.email}</p>
+          </div>
+          <div>
+            <h4>Birthday</h4>
+            <p>{formattedBirthday}</p>
+          </div>
+          <Button variant="primary" onClick={handleEdit}>
+            Change Profile Data
+          </Button>
+          <FavoriteMovies />
+        </div>
       )}
-    </div>
+    </main>
   );
 };
 

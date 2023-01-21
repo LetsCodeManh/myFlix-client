@@ -2,6 +2,7 @@ import { Button, Card, Col, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import DirectorsList from "../DirectorList/DirectorList";
+import FavoriteButtonIcon from "../FavoriteButtonIcon/FavoriteButtonIcon";
 import GenreList from "../GenreList/GenreList";
 
 const MovieView = () => {

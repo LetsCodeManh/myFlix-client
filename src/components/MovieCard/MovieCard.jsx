@@ -1,6 +1,7 @@
 import { PropTypes } from "prop-types";
 import { Button, Card, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import FavoriteButtonIcon from "../FavoriteButtonIcon/FavoriteButtonIcon";
 import "./index.scss";
 
 const MovieCard = ({ movie }) => {
@@ -18,11 +19,18 @@ const MovieCard = ({ movie }) => {
           <Card.Text className="movieDescription">
             {movie.description}
           </Card.Text>
-          <Link to={`/movies/${movie._id}`}>
-            <Button type="submit" variant="primary">
+
+          <div className="d-flex gap-3">
+            <Button
+              as={Link}
+              to={`/movies/${movie._id}`}
+              type="submit"
+              variant="primary"
+            >
               Read More!
             </Button>
-          </Link>
+            <FavoriteButtonIcon movie={movie} />
+          </div>
         </Card.Body>
       </Card>
     </Col>

@@ -1,6 +1,6 @@
 import React from 'react'
 
-function FavoriteMovies() {
+const FavoriteMovies = () => {
   return (
     <div>FavoriteMovies</div>
   )

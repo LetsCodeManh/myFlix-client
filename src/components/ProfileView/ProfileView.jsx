@@ -47,10 +47,31 @@ const ProfileView = () => {
     });
   };
 
-  const formattedBirthday = format(new Date(updatedUser.birthday), "yyyy-MM-dd")
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(
+        `https://young-journey-11100.herokuapp.com/users/${user.username}`,
 
-  // const password = user.password
-  // const replacedPassword = "*".repeat(password.length)
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      if (response.status !== 200) {
+        throw new Error(response.data.message);
+      }
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      alert("Profile successfully deleted");
+      window.location.pathname = "/";
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const formattedBirthday = format(
+    new Date(updatedUser.birthday),
+    "yyyy-MM-dd"
+  );
 
   return (
     <main className="p-5">
@@ -114,6 +135,9 @@ const ProfileView = () => {
           <div className="d-flex gap-3">
             <Button variant="primary" onClick={handleSave}>
               Save
+            </Button>
+            <Button variant="warning" onClick={handleDelete}>
+              Delete
             </Button>
             <Button variant="primary" onClick={handleCancel}>
               Cancel

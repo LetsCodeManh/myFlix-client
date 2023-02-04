@@ -1,6 +1,6 @@
 # myFlix (React)
 
-A movie application made with React, Redux, Bootstrap, and netlify.
+myFlix is a movie application built using React, Redux, Bootstrap, and Netlify.
 
 ## Screenshot
 
@@ -8,13 +8,13 @@ A movie application made with React, Redux, Bootstrap, and netlify.
 
 ## Live Demo
 
-You can check out a live demo of the application at:
+A live demo of the application can be accessed at:
 https://myflix-test-website.netlify.app/login
 
-If you want to check the server side of this project, here is the repo:
+The repository for the server side of the project can be found at:
 https://github.com/LetsCodeManh/myFlix-server
 
-## Technologies used
+## Technologies Used
 
 - React
 - Axios
@@ -22,13 +22,13 @@ https://github.com/LetsCodeManh/myFlix-server
 - Parcel
 - Redux
 
-## My role and tasks
+## My Role and Tasks
 
-As the sole developer of this project, I took on the role of designing and building the application from scratch. I faced the challenge of learning a new framework (React) and integrating it with Bootstrap, as well as working with a new library (Redux).
+As the sole developer of myFlix, I was responsible for designing and building the entire application from scratch. This involved learning a new framework (React), integrating it with Bootstrap, and working with a new library (Redux).
 
 ## Lessons Learned
 
-I learned a lot about React and Bootstrap, as well as working with other dependcies, during this project. I also gained a better understanding of how to integrate different technologies to build a functional and visually appealing application.
+Throughout the development of myFlix, I gained a deeper understanding of React, Bootstrap, and integrating different technologies. I also learned how to build a functional and visually appealing application.
 
 ## Installation
 
@@ -36,7 +36,6 @@ I learned a lot about React and Bootstrap, as well as working with other dependc
 
 ```
 git clone https://github.com/letscodemanh/ChatApp.git
-
 ```
 
 2. Install the dependencies:
@@ -48,8 +47,5 @@ npm install
 3. Run the app:
 
 ```
-npm start
+npm run build
 ```
-
-
-

@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/LetsCodeManh/myFlix-client/issues"
   },
-  "homepage": "https://github.com/LetsCodeManh/myFlix-client#readme",
+  "homepage": "https://LetsCodeManh.github.io/myFlix-client",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",

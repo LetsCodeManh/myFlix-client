@@ -52,6 +52,7 @@ const LoginView = ({ onLoggedIn }) => {
   };
 
   return (
+    <>
     <Form
       className="p-4 square border border-primary rounded-3 m-5"
       onSubmit={handleSubmit}
@@ -97,6 +98,12 @@ const LoginView = ({ onLoggedIn }) => {
         </Button>
       </div>
     </Form>
+    <div className="p-4 square border border-primary rounded-3 m-5">
+      <h2>For Testing!</h2>
+      <p>Username: test1</p>
+      <p>Password: test1</p>
+    </div>
+    </>
   );
 };
 
